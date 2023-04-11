@@ -69,6 +69,10 @@ main {
 }
 .results {
   font-family: "Karla", sans-serif;
+  font-size:large;
+  font-weight: 600;
   letter-spacing: -1.5px;
   margin: 0;
+  inline-size: 110px;
+  overflow-wrap: break-word;
 }
