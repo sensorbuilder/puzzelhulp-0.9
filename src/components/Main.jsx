@@ -14,10 +14,8 @@ export default function Main() {
     
     function handleChange(event) {
         setPost(oldPost => event.target.value)
-        //console.log(post)
     }
 
-   // let searchWord = 'getij'
     console.log('Main Component - Rendered')
     return (
         <main>

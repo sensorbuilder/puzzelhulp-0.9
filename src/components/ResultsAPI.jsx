@@ -9,7 +9,7 @@ const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
 const selector2 = 'body > div.main-holder > div > div > div > div > div > div.span8.right > div > div:nth-child(n) > table > tbody > tr:nth-child(n) > td > div:nth-child(n)'
 
 export default function Results(props) {
-    const [searchSolution, setSearchSolution] = React.useState([])
+    const [searchSolution, setSearchSolution] = React.useState(['No Result'])
     
     
     let searchWord = props.searchword;
@@ -31,6 +31,9 @@ export default function Results(props) {
     }
 
     React.useEffect(() => {
+        //clear previous result
+        setSearchSolution([])
+        console.log('useEffect') 
         Axios.get(`${baseURL}${searchWord}\\1\\1`)
             .then(response => {
                 const $ = load(response.data)
@@ -42,25 +45,25 @@ export default function Results(props) {
                     woord.startsWith(`${searchWord.toUpperCase()}`)
                 ) return
                 const a = woord.split(' (')[0]
-                setSearchSolution(prev => prev.push(a))
+                setSearchSolution(prev => [...prev,a])
             })
             })
             .catch(error => console.log(error))
     }, [props.searchword]);
 
-    console.log(searchSolution)
+    //console.log(searchSolution)
     //console.log(searchSolution.map(e => e.woorden))
     //console.log()
     //const results = searchSolution.map(e => e)
         // < p key = { e } className = "results" > { e }</p>)
-    //const results = searchSolution.map(e => e.woorden).flat().map(e => <p key={e} className="results">{e}</p>)
+    const results = searchSolution.map(e => <p key={e} className="results">{e}({e.length})</p>)
     //const results = <h1>hello</h1>
     //console.log(searchSolution)
     
     return (
         <div className="results--form">
             {/* {props.searchword} */}
-            {/* {results} */}
+            {results}
         </div>
     )
 }
