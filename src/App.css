@@ -64,15 +64,16 @@ main {
 
 .results--form {
   display: grid;
-  grid-template: 40px 40px 40px 40px / 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 5px;
 }
+
 .results {
   font-family: "Karla", sans-serif;
-  font-size:large;
-  font-weight: 600;
+  font-size:100%;
+  font-weight: 500;
   letter-spacing: -1.5px;
   margin: 0;
-  inline-size: 110px;
+  inline-size: 1fr;
   overflow-wrap: break-word;
 }
