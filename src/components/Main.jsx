@@ -1,5 +1,5 @@
 import React from "react";
-import Results from "./ResultsAPI"
+import Results from "./ResultsAPI2"
 
 export default function Main() {    
     const [post, setPost] = React.useState("");
