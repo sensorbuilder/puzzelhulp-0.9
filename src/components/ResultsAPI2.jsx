@@ -17,37 +17,41 @@ export default function Results(props) {
     //const searchResults = [];
 
     function appendOrUpdateWoord(arr, woord) {
+        console.log(arr)
+        const arr1 = []
         if ((woord.includes(' letters') ||
             woord.includes('\n')) ||
             woord.startsWith(`${searchWord.toUpperCase()}`)
             ) return
         const a = woord.split(' (')[0]
-        arr.push(a)
-        // const i = arr.findIndex(e => e.letters === a.length);
-        // if (i > -1) arr[i].woorden.push(a)
-        // else arr.push({ "letters": a.length, "woorden": [a] })
-        count++;
-        //return arr;
+        const i = arr.findIndex(e => e.letters === a.length);
+        if (i.length > 0) {
+            const updatedItem = {...i[0],"woorden":[...i[0].woorden,newwoord]}
+            
+            console.log(updatedItem)
+            const arr1 = [...arr.filter(e=> e.letters != a.length),{...updatedItem}]
+            setSearchSolution(arr1)
+            console.log(`add ${i}${i.length}`)
+        
+            } 
+                else
+            {
+                const arr1 = [...arr, {"letters": a.length, "woorden":a}]
+                setSearchSolution(arr1)
+                console.log(arr1)
+            }
     }
+        
 
     React.useEffect(() => {
         //clear previous result
         setSearchSolution([])
-        console.log('useEffectAPI2') 
-        Axios.get(`${baseURL}${searchWord}\\1\\1`)
+        console.log(`useEffectAPI2 ${searchWord}`) 
+        searchWord && Axios.get(`${baseURL}${searchWord}\\1\\1`)
             .then(response => {
                 const $ = load(response.data)
                 console.log($(selector2))
-                $(selector2).toArray().map(item => {
-                    //console.log($(item).text())
-                    const woord = $(item).text()
-                if ((woord.includes(' letters') ||
-                    woord.includes('\n')) ||
-                    woord.startsWith(`${searchWord.toUpperCase()}`)
-                ) return
-                const a = woord.split(' (')[0]
-                setSearchSolution(prev => [...prev,a])
-            })
+                $(selector2).toArray().map(item => appendOrUpdateWoord(searchSolution,$(item).text()))
             })
             .catch(error => console.log(error))
     }, [props.searchword]);
@@ -57,14 +61,15 @@ export default function Results(props) {
     //console.log()
     //const results = searchSolution.map(e => e)
         // < p key = { e } className = "results" > { e }</p>)
-    const results = searchSolution.map(e => <p key={e} className="results">{e}({e.length})</p>)
+    console.log(`SearchSolution: ${JSON.stringify(searchSolution)}`)
+        //const results = searchSolution.map(e => <p key={e} className="results">{e}({e.length})</p>)
     //const results = <h1>hello</h1>
     //console.log(searchSolution)
     
     return (
         <div className="results--form">
             {/* {props.searchword} */}
-            {results}
+            {/* {results} */}
         </div>
     )
 }
