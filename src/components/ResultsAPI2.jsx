@@ -60,9 +60,19 @@ export default function Results(props) {
     console.log(`SearchSolution: ${JSON.stringify(searchSolution)}`)
     console.log(`rijen ${searchSolution.length}`)
     const results = searchSolution.map((e) => (
-            <p key={e.letters} className="letters">{e.letters}</p>
-            {e.woorden.map(e => <p key={e.letters} className="result">{e}</p>)}
-        )})
+        <div key={e.letters}>
+          <p className="letters">{e.letters}</p>
+          {e.woorden.map((word) => (
+            <p key={word} className="result">
+              {word}
+            </p>
+          ))}
+        </div>
+      ));
+    // const results = searchSolution.map((e) => (
+    //         <p key={e.letters} className="letters">{e.letters}</p>
+    //         {e.woorden.map(e => <p key={e.letters} className="result">{e}</p>)}
+    //     )}
         
         
     //     { 

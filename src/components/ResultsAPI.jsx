@@ -51,14 +51,8 @@ export default function Results(props) {
             .catch(error => console.log(error))
     }, [props.searchword]);
 
-    //console.log(searchSolution)
-    //console.log(searchSolution.map(e => e.woorden))
-    //console.log()
-    //const results = searchSolution.map(e => e)
-        // < p key = { e } className = "results" > { e }</p>)
-    const results = searchSolution.map(e => <p key={e} className="results">{e}({e.length})</p>)
-    //const results = <h1>hello</h1>
-    //console.log(searchSolution)
+    
+    const results = searchSolution.map((e, i) => <p key={e} className="results">{e}({i}-{searchSolution[(i+1)].length})</p>)
     
     return (
         <div className="results--form">
