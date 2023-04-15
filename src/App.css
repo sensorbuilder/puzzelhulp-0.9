@@ -5,7 +5,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
-  min-width: 400px;
+  width: 100%;
   background: linear-gradient(92deg, #e6dfe9 1.18%, #dec4fb 100%);
 }
 p {
@@ -14,7 +14,6 @@ p {
 main {
   padding: 15px;
   height: 100%;
-  min-width: 400px;
 }
 
 .header {
