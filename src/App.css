@@ -36,12 +36,13 @@ main {
 
 .header--title {
   font-size: 1.25rem;
-  margin-right: auto;
 }
 
 .header--project {
   font-size: 0.75rem;
   font-weight: 500;
+  margin-left: auto;
+  padding-right: 20px;
 }
 
 .form {
