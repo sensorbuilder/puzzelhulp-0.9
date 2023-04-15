@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/crossword.jpg"
 
 export default function Header() {
-    console.log('Header Component - Rendered')
+    console.log('Rendered - Header')
     return (
         <header className="header">
             <img

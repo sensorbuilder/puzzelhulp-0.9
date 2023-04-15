@@ -1,9 +1,11 @@
 import React from "react";
 import Results from "./ResultsAPI2"
+import Footer from './Footer'
 
 export default function Main() {    
     const [post, setPost] = React.useState("");
     const [searchWord, setSearchWord] = React.useState("")
+    const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
     //const [result, setResult] = React.useState(data.data);
    
     function handleClick(event) {
@@ -16,27 +18,33 @@ export default function Main() {
         setPost(oldPost => event.target.value)
     }
 
-    console.log('Main Component - Rendered')
+    function handleFocus(event) {
+        event.target.select()
+    }
+
+    console.log('Rendered - Main')
     return (
         <main>
             <form className="form">
                 <input 
                     type="text"
                     name="searchword"
-                    placeholder='search word'
+                    placeholder='zoekwoord invoeren'
                     className="form--input"
                     value={post}
                     onChange={handleChange}
+                    onFocus={handleFocus}
                 />
                 <button 
                     className="form--button"
-                    name="search"
+                    name="Zoek"
                     onClick={handleClick}
                 >
-                    Search
+                    Zoek
                 </button>
             </form>
-            <Results searchword={searchWord} />
+            <Results searchword={searchWord} solution={searchSolution} setSolution={setSearchSolution} />
+            <Footer solution={searchSolution} />
         </main>
     )
 }

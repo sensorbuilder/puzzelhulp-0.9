@@ -9,10 +9,14 @@ const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
 const selector2 = 'body > div.main-holder > div > div > div > div > div > div.span8.right > div > div:nth-child(n) > table > tbody > tr:nth-child(n) > td > div:nth-child(n)'
 
 export default function Results(props) {
-    const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
+    const { searchword, solution, setSolution } = props
+    console.log('Rendered - Result')
+    // console.log( searchword, solution, setSolution)
+    // console.log(`props ${JSON.stringify(props)}`)
+    //const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
     
     
-    let searchWord = props.searchword;
+    //let searchword = searchword;
     let count = 0;
     //const searchResults = [];
 
@@ -20,21 +24,21 @@ export default function Results(props) {
         /*Filter incorrect sections and characters */
         if ((woord.includes(' letters') ||
             woord.includes('\n')) ||
-            woord.startsWith(`${searchWord.toUpperCase()} `) //added space e.g. EB -> EBBE 
+            woord.startsWith(`${searchword.toUpperCase()} `) //added space e.g. EB -> EBBE 
             ) {
-                console.log(`${index}-skip`)
+                // console.log(`${index}-skip`)
                 return
             }
         const a = woord.split(' (')[0]
-        setSearchSolution(prev => {
+        setSolution(prev => {
             const i = prev.findIndex(e => e.letters === a.length)
             if (i > -1) {
-                console.log(`${index}-update`)
+                // console.log(`${index}-update`)
                 const updateWords = [...prev.filter(e => e.letters === a.length )]
                 const keepWords = prev.filter(e => e.letters != a.length)
                 return [...keepWords,{letters: a.length, woorden:[...updateWords[0].woorden,a]}]
             } else {
-                console.log(`${index}-add`)
+                // console.log(`${index}-add`)
                 return [...prev,{letters: a.length, woorden:[a]}]
             }
         })
@@ -42,19 +46,19 @@ export default function Results(props) {
 
     React.useEffect(() => {
         //clear previous result
-        setSearchSolution([])
-        console.log(`useEffectAPI2 ${searchWord}`) 
-        searchWord && Axios.get(`${baseURL}${searchWord}\\1\\1`)
+        setSolution([])
+        searchword && Axios.get(`${baseURL}${searchword}\/1\/1`)
             .then(response => {
+                console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
                 const $ = load(response.data)
-                $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),searchSolution))
+                $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
             })
             .catch(error => console.log(error))
-    }, [props.searchword]);
+    }, [searchword]);
 
-    console.log(`SearchSolution: ${JSON.stringify(searchSolution)}`)
-    console.log(`rijen ${searchSolution.length}`)
-    const results = searchSolution.map((e) => (
+    // console.log(`searchSolution: ${JSON.stringify(solution)}`)
+    // console.log(`rijen ${solution.length}`)
+    const results = solution.map((e) => (
         <div key={e.letters}>
             <p className="letters">{e.letters} - letters</p>
             <p className="results">
@@ -72,7 +76,7 @@ export default function Results(props) {
     
     return (
         <div className="results--form">
-            {/* {props.searchword} */}
+            {/* {searchword} */}
             {results}
         </div>
     )

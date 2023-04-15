@@ -5,6 +5,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
+  min-width: 400px;
   background: linear-gradient(92deg, #e6dfe9 1.18%, #dec4fb 100%);
 }
 p {
@@ -13,6 +14,7 @@ p {
 main {
   padding: 15px;
   height: 100%;
+  min-width: 400px;
 }
 
 .header {
@@ -52,14 +54,18 @@ main {
 }
 
 .form--input {
-  font-family: "Karla", sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  font-size: large;
+  margin:0%;
   border-radius: 5px;
   border: 1px solid #D5D4D8;
   text-indent: 5px;
 }
 
 .form--button {
-  font-family: "Karla", sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+  letter-spacing: -1px;
   border-radius: 5px;
   background: linear-gradient(90.41deg, #711F8D 1.14%, #A818DA 100%);
   color: white;
