@@ -7,7 +7,9 @@ body {
   margin: 0;
   background: linear-gradient(92deg, #e6dfe9 1.18%, #dec4fb 100%);
 }
-
+p {
+  margin:1px;
+}
 main {
   padding: 15px;
   height: 100%;
@@ -42,9 +44,11 @@ main {
 }
 
 .form {
-  display: grid;
-  grid-template: 40px 40px / 1fr 1fr;
-  gap: 17px;
+    height: 100%;
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 40px;
 }
 
 .form--input {
@@ -64,16 +68,31 @@ main {
 
 .results--form {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 5px;
 }
 
 .results {
+  border-radius: 5px;
+  border: 1px dashed #0f0f0f;
+}
+
+.result {
   font-family: 'Roboto Mono', monospace;
-  font-size:100%;
   font-weight: 500;
   letter-spacing: -1.5px;
   margin: 0;
+  inline-size: 1fr;
+  overflow-wrap: break-word;
+}
+
+.letters {
+  font-family: 'Roboto Mono', monospace;
+  font-size:100%;
+  color: #672280;
+  letter-spacing: -1.5px;
+  margin-left: 10px;
+  margin-right:10px;
   inline-size: 1fr;
   overflow-wrap: break-word;
 }

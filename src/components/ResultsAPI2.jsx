@@ -9,7 +9,7 @@ const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
 const selector2 = 'body > div.main-holder > div > div > div > div > div > div.span8.right > div > div:nth-child(n) > table > tbody > tr:nth-child(n) > td > div:nth-child(n)'
 
 export default function Results(props) {
-    const [searchSolution, setSearchSolution] = React.useState(['No Result'])
+    const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
     
     
     let searchWord = props.searchword;
@@ -52,39 +52,23 @@ export default function Results(props) {
             .catch(error => console.log(error))
     }, [props.searchword]);
 
-    //console.log(searchSolution)
-    //console.log(searchSolution.map(e => e.woorden))
-    //console.log()
-    //const results = searchSolution.map(e => e)
-        // < p key = { e } className = "results" > { e }</p>)
     console.log(`SearchSolution: ${JSON.stringify(searchSolution)}`)
     console.log(`rijen ${searchSolution.length}`)
     const results = searchSolution.map((e) => (
         <div key={e.letters}>
-          <p className="letters">{e.letters}</p>
-          {e.woorden.map((word) => (
-            <p key={word} className="result">
-              {word}
-            </p>
-          ))}
+            <p className="letters">{e.letters} - letters</p>
+            <p className="results">
+                {e.woorden.reduce((acc, word, index) => {
+                    acc.push(
+                        <span key={word} className="result"> • {word} </span>
+                    );
+                    if (index === e.woorden.length - 1) {
+                        acc.push(<span key={`separator-${index}`}>•</span>);
+                    }
+                    return acc;
+                }, [])}</p>
         </div>
-      ));
-    // const results = searchSolution.map((e) => (
-    //         <p key={e.letters} className="letters">{e.letters}</p>
-    //         {e.woorden.map(e => <p key={e.letters} className="result">{e}</p>)}
-    //     )}
-        
-        
-    //     { 
-    //             e.woorden.map((e) => {
-    //                 return (<p key={e} classname="results">{e}</p>)
-    //             });
-    //         }
-    //     );
-    // });
-    //     //{this.woorden.map(e => <p key={e} classname="results">{e}</p>)})
-    //const results = <h1>hello</h1>
-    //console.log(searchSolution)
+    ));
     
     return (
         <div className="results--form">
