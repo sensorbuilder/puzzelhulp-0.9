@@ -8,6 +8,9 @@ export default function Footer(props) {
     solution.forEach(e => wordSum += e.woorden.length)
     
     return (
-        <pre>{`${wordSum} woorden gevonden - powered by mijnwoordenboek.nl`}</pre>
+        <div className="footer--text">
+            <p>{`${wordSum} woorden gevonden - powered by mijnwoordenboek.nl`}</p>
+        </div>
+        
     )
 }

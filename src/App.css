@@ -1,3 +1,5 @@
+/* https://coolors.co/palette/03045e-023e8a-0077b6-0096c7-00b4d8-48cae4-90e0ef-ade8f4-caf0f8 */
+
 * {
   box-sizing: border-box;
 }
@@ -6,7 +8,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   width: 100%;
-  background: linear-gradient(92deg, #e6dfe9 1.18%, #dec4fb 100%);
+  background: linear-gradient(92deg, #CAF0F8 1.18%, #ADE8F4 100%);
 }
 p {
   margin:1px;
@@ -20,8 +22,8 @@ main {
   display: flex;
   align-items: center;
   height: 50px;
-  background: linear-gradient(90deg, #672280 1.18%, #A626D3 100%);
-  color: white;
+  background: linear-gradient(90deg, #023E8A 1.18%, #0096C7 100%);
+  color: #CAF0F8;
   padding: 5px;
 }
 
@@ -58,7 +60,9 @@ main {
   font-size: large;
   margin:0%;
   border-radius: 5px;
-  border: 1px solid #D5D4D8;
+  color:#03045E;
+  background-color: #90E0EF;
+  border: 1px solid #CAF0F8;
   text-indent: 5px;
 }
 
@@ -67,8 +71,8 @@ main {
   font-weight: 500;
   letter-spacing: -1px;
   border-radius: 5px;
-  background: linear-gradient(90.41deg, #711F8D 1.14%, #A818DA 100%);
-  color: white;
+  background: linear-gradient(90.41deg, #023E8A 1.18%, #0096C7 100%);
+  color: #CAF0F8;
   border: none;
 }
 
@@ -80,13 +84,14 @@ main {
 
 .results {
   border-radius: 5px;
-  border: 1px dashed #0f0f0f;
+  border: 1px dashed #03045E;
 }
 
 .result {
   font-family: 'Roboto Mono', monospace;
   font-weight: 500;
   letter-spacing: -1.5px;
+  color:#03045E;
   margin: 0;
   inline-size: 1fr;
   overflow-wrap: break-word;
@@ -95,7 +100,18 @@ main {
 .letters {
   font-family: 'Roboto Mono', monospace;
   font-size:100%;
-  color: #672280;
+  color: #023E8A;
+  letter-spacing: -1.5px;
+  margin-left: 10px;
+  margin-right:10px;
+  inline-size: 1fr;
+  overflow-wrap: break-word;
+}
+
+.footer--text {
+  font-family: 'Roboto Mono', monospace;
+  font-size:85%;
+  color: #023E8A;
   letter-spacing: -1.5px;
   margin-left: 10px;
   margin-right:10px;
