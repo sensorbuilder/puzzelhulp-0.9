@@ -11,42 +11,35 @@ const selector2 = 'body > div.main-holder > div > div > div > div > div > div.sp
 export default function Results(props) {
     const { searchword, solution, setSolution } = props
     console.log('Rendered - Result')
-    // console.log( searchword, solution, setSolution)
-    // console.log(`props ${JSON.stringify(props)}`)
-    //const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
-    
-    
-    //let searchword = searchword;
     let count = 0;
-    //const searchResults = [];
 
     function appendOrUpdateWoord(index, woord, test) {
         /*Filter incorrect sections and characters */
         if ((woord.includes(' letters') ||
             woord.includes('\n')) ||
             woord.startsWith(`${searchword.toUpperCase()} `) //added space e.g. EB -> EBBE 
-            ) {
-                // console.log(`${index}-skip`)
-                return
-            }
+            ) return
+        /*remove additional information spaced split words */
         const a = woord.split(' (')[0]
+        
         setSolution(prev => {
             const i = prev.findIndex(e => e.letters === a.length)
+            /*update existing record*/
             if (i > -1) {
-                // console.log(`${index}-update`)
                 const updateWords = [...prev.filter(e => e.letters === a.length )]
                 const keepWords = prev.filter(e => e.letters != a.length)
                 return [...keepWords,{letters: a.length, woorden:[...updateWords[0].woorden,a]}]
             } else {
-                // console.log(`${index}-add`)
+                /*add new <record></record> */
                 return [...prev,{letters: a.length, woorden:[a]}]
             }
         })
     }      
 
     React.useEffect(() => {
-        //clear previous result
+        /*reset solution result after searchword has been updated*/
         setSolution([])
+        /*issue the API call skip when searchword is not set (1st run)*/
         searchword && Axios.get(`${baseURL}${searchword}\/1\/1`)
             .then(response => {
                 console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
