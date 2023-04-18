@@ -7,6 +7,7 @@ import { load } from "cheerio";
 
 const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
 const selector2 = 'body > div.main-holder > div > div > div > div > div > div.span8.right > div > div:nth-child(n) > table > tbody > tr:nth-child(n) > td > div:nth-child(n)'
+const kvURL = 'https://worker-kv-api.0nu2sngw3778.workers.dev/set?' //searchword=getij'
 
 export default function Results(props) {
     const { searchword, solution, setSolution } = props
@@ -40,13 +41,20 @@ export default function Results(props) {
         /*reset solution result after searchword has been updated*/
         setSolution([])
         /*issue the API call skip when searchword is not set (1st run)*/
-        searchword && Axios.get(`${baseURL}${searchword}\/1\/1`)
-            .then(response => {
-                console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
-                const $ = load(response.data)
-                $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
-            })
-            .catch(error => console.log(error))
+        searchword && Axios.get(`${kvURL}searchword=${searchword}`)
+        .then(response => {
+            console.log(`Api call to: ${kvURL}searchword=${searchword}`)
+            const $ = load(response.data)
+            console.log($)
+        })
+        // .catch(error => console.log(error))
+        // searchword && Axios.get(`${baseURL}${searchword}\/1\/1`)
+        //     .then(response => {
+        //         console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
+        //         const $ = load(response.data)
+        //         $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
+        //     })
+        //     .catch(error => console.log(error))
     }, [searchword]);
 
     // console.log(`searchSolution: ${JSON.stringify(solution)}`)
