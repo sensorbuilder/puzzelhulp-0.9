@@ -59,26 +59,26 @@ export default function Results(props) {
 
     // console.log(`searchSolution: ${JSON.stringify(solution)}`)
     // console.log(`rijen ${solution.length}`)
-    const results = solution.map((e) => (
-        <div key={e.letters}>
-            <p className="letters">{e.letters} - letters</p>
-            <p className="results">
-                {e.woorden.reduce((acc, word, index) => {
-                    acc.push(
-                        <span key={word} className="result"> • {word} </span>
-                    );
-                    if (index === e.woorden.length - 1) {
-                        acc.push(<span key={`separator-${index}`}>•</span>);
-                    }
-                    return acc;
-                }, [])}</p>
-        </div>
-    ));
+    // const results = solution.map((e) => (
+    //     <div key={e.letters}>
+    //         <p className="letters">{e.letters} - letters</p>
+    //         <p className="results">
+    //             {e.woorden.reduce((acc, word, index) => {
+    //                 acc.push(
+    //                     <span key={word} className="result"> • {word} </span>
+    //                 );
+    //                 if (index === e.woorden.length - 1) {
+    //                     acc.push(<span key={`separator-${index}`}>•</span>);
+    //                 }
+    //                 return acc;
+    //             }, [])}</p>
+    //     </div>
+    // ));
     
     return (
         <div className="results--form">
             {/* {searchword} */}
-            {results}
+            {/* {results} */}
         </div>
     )
 }
