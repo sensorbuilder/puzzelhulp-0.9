@@ -3,6 +3,7 @@ import React from "react"
 
 import Axios from "axios";
 import { load } from "cheerio";
+import { resolveBaseUrl } from "vite";
 
 
 const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
@@ -56,6 +57,7 @@ export default function Results(props) {
                     console.log(response.data)
                 } else {
                     console.log('Found in Cache - setSolution')
+                    //setSolution(response.data)
                     response.data.woorden.map((item,i) => appendOrUpdateWoord(i,item,solution))
                 }
 
