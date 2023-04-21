@@ -3,7 +3,7 @@ import React from "react"
 
 import Axios from "axios";
 import { load } from "cheerio";
-import { resolveBaseUrl } from "vite";
+// import { resolveBaseUrl } from "vite";
 
 
 const baseURL = 'https://www.mijnwoordenboek.nl/puzzelwoordenboek/'
@@ -53,11 +53,14 @@ export default function Results(props) {
                     const $ = load(response.data)
                     $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
                     console.log('Update Cache')
-                    response = await Axios.post(kvURL,`{searchword:${searchword}, woorden:${solution}`)
+                    response = await Axios.post(kvURL,`{searchword:${searchword}, solution:${solution}`)
                     console.log(response.data)
                 } else {
-                    console.log('Found in Cache - setSolution')
-                    //setSolution(response.data)
+                    // console.log('Found in Cache - setSolution')
+                    // console.log(typeof(response.data))
+                    // setSolution([response.data])
+                    // console.log(response.data)
+                    // console.log(solution)
                     response.data.woorden.map((item,i) => appendOrUpdateWoord(i,item,solution))
                 }
 
@@ -108,6 +111,7 @@ export default function Results(props) {
 
     // console.log(`searchSolution: ${JSON.stringify(solution)}`)
     // console.log(`rijen ${solution.length}`)
+    console.log({solution})
     const results = solution.map((e) => (
         <div key={e.letters}>
             <p className="letters">{e.letters} - letters</p>
