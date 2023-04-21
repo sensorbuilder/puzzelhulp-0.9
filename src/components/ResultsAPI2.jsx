@@ -14,7 +14,31 @@ export default function Results(props) {
     console.log('Rendered - Result')
     let count = 0;
 
-    function appendOrUpdateWoord(index, woord, test) {
+    // function appendOrUpdateWoord(solutionArr, woord) {
+    //     /*Filter incorrect sections and characters */
+    //     if ((woord.includes(' letters') ||
+    //         woord.includes('\n')) ||
+    //         woord.startsWith(`${searchword.toUpperCase()} `) //added space e.g. EB -> EBBE 
+    //         ) return
+    //     /*remove additional information spaced split words */
+    //     const a = woord.split(' (')[0]
+        
+    //     setSolution(prev => {
+    //         const i = prev.findIndex(e => e.letters === a.length)
+    //         /*update existing record*/
+    //         if (i > -1) {
+    //             const updateWords = [...prev.filter(e => e.letters === a.length )]
+    //             const keepWords = prev.filter(e => e.letters != a.length)
+    //             return [...keepWords,{letters: a.length, woorden:[...updateWords[0].woorden,a]}]
+    //         } else {
+    //             /*add new <record></record> */
+    //             return [...prev,{letters: a.length, woorden:[a]}]
+    //         }
+    //     })
+    // }      
+
+    function appOrUpd(solutionArr, woord) {
+        console.log({solutionArr})
         /*Filter incorrect sections and characters */
         if ((woord.includes(' letters') ||
             woord.includes('\n')) ||
@@ -23,23 +47,22 @@ export default function Results(props) {
         /*remove additional information spaced split words */
         const a = woord.split(' (')[0]
         
-        setSolution(prev => {
-            const i = prev.findIndex(e => e.letters === a.length)
+            const i = solutionArr.findIndex(e => e.letters === a.length)
             /*update existing record*/
             if (i > -1) {
-                const updateWords = [...prev.filter(e => e.letters === a.length )]
-                const keepWords = prev.filter(e => e.letters != a.length)
-                return [...keepWords,{letters: a.length, woorden:[...updateWords[0].woorden,a]}]
+                const updateWords = [...solutionArr.filter(e => e.letters === a.length )]
+                const keepWords = solutionArr.filter(e => e.letters != a.length)
+                solutionArr = [...keepWords,{letters: a.length, woorden:[...updateWords[0].woorden,a]}]
             } else {
                 /*add new <record></record> */
-                return [...prev,{letters: a.length, woorden:[a]}]
+                solutionArr =  [...solutionArr,{letters: a.length, woorden:[a]}]
             }
-        })
     }      
 
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
         setSolution([])
+        let solutionArr = []
         let update = false
         /*issue the API call skip when searchword is not set (1st run)*/
         async function makeApiCalls() {
@@ -51,8 +74,19 @@ export default function Results(props) {
                     update = true
                     console.log('Not in Cache - Checking Web')
                     response = await Axios.get(`${baseURL}${searchword}\/1\/1`)
+                    console.log('1')
                     const $ = load(response.data)
-                    $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
+                    console.log('2')
+                    //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
+                    $(selector2).toArray().forEach( item => appOrUpd(solutionArr, $(item).text()))
+                    console.log(solutionArr)
+                    setTimeout(async () => {
+                        console.log('Update Cache')
+                        console.log(`stringify solution : ${JSON.stringify(solutionArr)}`)
+                        const response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
+                        console.log(response.data)
+                      }, 3000)
+                      setSolution(solutionArr)
                     // console.log('Update Cache')
                     // console.log(`stringify solution : ${JSON.stringify(solution)}`)
                     // response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solution)})
@@ -74,13 +108,11 @@ export default function Results(props) {
         async function updateCache () {
             console.log('Update Cache')
             console.log(`stringify solution : ${JSON.stringify(solution)}`)
-            response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solution)})
+            
             console.log(response.data)
         }
 
         searchword && makeApiCalls()  // dont make api calls with empty searchword e.g. when app loads first time.
-        console.log(update)
-        update && updateCache()
     }, [searchword]);
 
     //     const checkInCache = async () => {
