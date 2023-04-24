@@ -11,6 +11,7 @@ const kvURL = 'https://worker-kv-api.0nu2sngw3778.workers.dev/' //set?searchword
 
 export default function Results(props) {
     const { searchword, solution, setSolution } = props
+    let solutionArr = [] //initialize temp array
     console.log('Rendered - Result')
     let count = 0;
 
@@ -37,7 +38,7 @@ export default function Results(props) {
     //     })
     // }      
 
-    function appOrUpd(solutionArr, woord) {
+    function appOrUpd(woord) {
         console.log({solutionArr})
         /*Filter incorrect sections and characters */
         if ((woord.includes(' letters') ||
@@ -62,7 +63,7 @@ export default function Results(props) {
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
         setSolution([])
-        let solutionArr = []
+        solutionArr = []
         let update = false
         /*issue the API call skip when searchword is not set (1st run)*/
         async function makeApiCalls() {
@@ -78,7 +79,7 @@ export default function Results(props) {
                     const $ = load(response.data)
                     console.log('2')
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
-                    $(selector2).toArray().forEach( item => appOrUpd(solutionArr, $(item).text()))
+                    $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
                     console.log(solutionArr)
                     setTimeout(async () => {
                         console.log('Update Cache')
