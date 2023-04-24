@@ -11,7 +11,7 @@ export default function Main() {
     function handleClick(event) {
         event.preventDefault()
         setSearchWord(prev => post)
-        console.log(`Click! : ${searchWord}`)
+        //console.log(`Click! : ${searchWord}`)
     }
     
     function handleChange(event) {
