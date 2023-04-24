@@ -12,7 +12,7 @@ const kvURL = 'https://worker-kv-api.0nu2sngw3778.workers.dev/' //set?searchword
 export default function Results(props) {
     const { searchword, solution, setSolution } = props
     let solutionArr = [] //initialize temp array
-    console.log('Rendered - Result')
+    //console.log('Rendered - Result')
     let count = 0;
 
     // function appendOrUpdateWoord(solutionArr, woord) {
@@ -62,7 +62,8 @@ export default function Results(props) {
 
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
-        console.time('Api Call')
+        searchword && console.time('API Timing') //skip first time
+        //console.log(`Y`)
         setSolution([])
         solutionArr = []
         // let update = false
@@ -79,22 +80,22 @@ export default function Results(props) {
                     const $ = load(response.data)
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
-                    console.log(solutionArr)
+                    //console.log(solutionArr)
                     response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
-                    console.log(response.status)
+                    //console.log(response.status)
                     setSolution(solutionArr)
-                    console.timeEnd('Api Call')
+                    console.timeEnd('API Timing')
                 } else {
                     console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
-                    console.timeEnd('Api Call')
+                    console.timeEnd('API Timing')
                     //b = performance.now()
                 }
 
             } catch (error) {
                 console.log({error})
                 //b = performance.now()
-                console.timeEnd('Api Call')
+                console.timeEnd('API Timing')
             }
             
         }
