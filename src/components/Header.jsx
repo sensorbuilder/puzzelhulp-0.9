@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/crossword.jpg"
+import logo from "../assets/crossword.png"
 
 export default function Header() {
     //console.log('Rendered - Header')
