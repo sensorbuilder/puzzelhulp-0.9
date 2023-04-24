@@ -62,58 +62,45 @@ export default function Results(props) {
 
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
+        var a = performance.now()
+        var b = performance.now()
         setSolution([])
         solutionArr = []
-        let update = false
+        // let update = false
         /*issue the API call skip when searchword is not set (1st run)*/
         async function makeApiCalls() {
             try {
-                console.log(`Check Cache`)
+                console.log(`Find Solution`)
                 let response = await Axios.get(`${kvURL}set?searchword=${searchword}`)
-                console.log(response.data)
+                //console.log(response.data)
                 if (!response.data.found) {
-                    update = true
-                    console.log('Not in Cache - Checking Web')
+                    // update = true
+                    console.log('From Web')
                     response = await Axios.get(`${baseURL}${searchword}\/1\/1`)
-                    console.log('1')
                     const $ = load(response.data)
-                    console.log('2')
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
-                    console.log(solutionArr)
-                    setTimeout(async () => {
-                        console.log('Update Cache')
-                        console.log(`stringify solution : ${JSON.stringify(solutionArr)}`)
+                    
+                    async () => {
                         const response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
-                        console.log(response.data)
-                      }, 3000)
+                      }
                       setSolution(solutionArr)
-                    // console.log('Update Cache')
-                    // console.log(`stringify solution : ${JSON.stringify(solution)}`)
-                    // response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solution)})
-                    // console.log(response.data)
+                      b = performance.now()
                 } else {
-                    console.log('Found in Cache - setSolution')
-                    // console.log(typeof(response.solution))
-                    console.log(response.data.solution)
+                    console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
-                    // console.log(response.data)
-                    // console.log(solution)
-                    //response.data.woorden.map((item,i) => appendOrUpdateWoord(i,item,solution))
+                    b = performance.now()
                 }
 
             } catch (error) {
                 console.log({error})
+                b = performance.now()
             }
-        }
-        async function updateCache () {
-            console.log('Update Cache')
-            console.log(`stringify solution : ${JSON.stringify(solution)}`)
             
-            console.log(response.data)
         }
 
         searchword && makeApiCalls()  // dont make api calls with empty searchword e.g. when app loads first time.
+        console.warn(`Api-Call : ${b-a} ms`)
     }, [searchword]);
 
     //     const checkInCache = async () => {
