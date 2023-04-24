@@ -39,7 +39,7 @@ export default function Results(props) {
     // }      
 
     function appOrUpd(woord) {
-        console.log({solutionArr})
+        //console.log({solutionArr})
         /*Filter incorrect sections and characters */
         if ((woord.includes(' letters') ||
             woord.includes('\n')) ||
@@ -62,88 +62,48 @@ export default function Results(props) {
 
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
-        var a = performance.now()
-        var b = performance.now()
+        console.time('Api Call')
         setSolution([])
         solutionArr = []
         // let update = false
         /*issue the API call skip when searchword is not set (1st run)*/
         async function makeApiCalls() {
             try {
-                console.log(`Find Solution`)
+                console.log(`Get solution from cache or web`)
                 let response = await Axios.get(`${kvURL}set?searchword=${searchword}`)
                 //console.log(response.data)
                 if (!response.data.found) {
-                    // update = true
+                    //update = true
                     console.log('From Web')
                     response = await Axios.get(`${baseURL}${searchword}\/1\/1`)
                     const $ = load(response.data)
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
-                    
-                    async () => {
-                        const response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
-                      }
-                      setSolution(solutionArr)
-                      b = performance.now()
+                    console.log(solutionArr)
+                    response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
+                    console.log(response.status)
+                    setSolution(solutionArr)
+                    console.timeEnd('Api Call')
                 } else {
                     console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
-                    b = performance.now()
+                    console.timeEnd('Api Call')
+                    //b = performance.now()
                 }
 
             } catch (error) {
                 console.log({error})
-                b = performance.now()
+                //b = performance.now()
+                console.timeEnd('Api Call')
             }
             
         }
 
         searchword && makeApiCalls()  // dont make api calls with empty searchword e.g. when app loads first time.
-        console.warn(`Api-Call : ${b-a} ms`)
+        
     }, [searchword]);
 
-    //     const checkInCache = async () => {
-    //         console.log(`check CF`)
-    //             const response = await Axios.get(`${kvURL}searchword=${searchword}`)
-    //             console.log(`Api call to: ${kvURL}searchword=${searchword}`)
-    //             console.log(response.data)
-    //             if (response.data.found) 
-    //             {
-    //                 response.data.woorden.map((item,i) => appendOrUpdateWoord(i,item,solution))
-    //                 foundInCache = true
-    //                 console.log('CF-Cache')
-    //             }
-    //             true
-    //         }
-    //             const checkOnWeb = async () => {
-    //                 console.log(`Web-Call : ${searchword}`)
-    //                 const response = searchword && await Axios.get(`${baseURL}${searchword}\/1\/1`)
-    //                 console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
-    //                 const $ = load(response.data)
-    //                 $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
-    //             }
-    //         checkInCache()
-    //         foundInCache && checkOnWeb()
-    // }, [searchword]);
-                 
-            
-            //console.log(response.data)
-            // console.log($)
-        //})
-        // .catch(error => console.log(error))
-        // searchword && Axios.get(`${baseURL}${searchword}\/1\/1`)
-        //     .then(response => {
-        //         console.log(`API call to: ${baseURL}${searchword}\/1\/1`) 
-        //         const $ = load(response.data)
-        //         $(selector2).toArray().map((item,i) => appendOrUpdateWoord(i, $(item).text(),solution))
-        //     })
-        //     .catch(error => console.log(error))
-    //}, [searchword]);
-
-    // console.log(`searchSolution: ${JSON.stringify(solution)}`)
-    // console.log(`rijen ${solution.length}`)
-    //console.log({solution})
+    
     const results = solution.map((e) => (
         <div key={e.letters}>
             <p className="letters">{e.letters} - letters</p>
