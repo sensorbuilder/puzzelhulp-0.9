@@ -22,7 +22,7 @@ export default function Main() {
         event.target.select()
     }
 
-    console.log('Rendered - Main')
+    //console.log('Rendered - Main')
     return (
         <main>
             <form className="form">

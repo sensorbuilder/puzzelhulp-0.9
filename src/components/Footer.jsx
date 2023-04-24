@@ -1,7 +1,7 @@
 import React from "react"
 
 export default function Footer(props) {
-    console.log('Rendered - Footer')
+    //console.log('Rendered - Footer')
     const { solution } = props
     
     let wordSum = 0

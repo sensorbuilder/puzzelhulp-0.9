@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/crossword.jpg"
 
 export default function Header() {
-    console.log('Rendered - Header')
+    //console.log('Rendered - Header')
     const timestamp = Date.now(); // get current timestamp in milliseconds
 
     const dateObj = new Date(timestamp); // create a new Date object from the timestamp
