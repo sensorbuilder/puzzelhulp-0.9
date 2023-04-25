@@ -82,8 +82,7 @@ export default function Results(props) {
                     const $ = load(response.data)
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
-                    solutionArr ? console.log(`solutionArr - ${solutionArr}`) : console.log(`solutionArr Empty`)
-                    response = await Axios.post(kvURL,{"searchword":searchword.toUpperCase(), "solution":JSON.stringify(solutionArr)})
+                    solutionArr.length && (response = await Axios.post(kvURL,{"searchword":searchword.toUpperCase(), "solution":JSON.stringify(solutionArr)}))
                     setSolution(solutionArr)
                     console.log(`${performance.now() - a}ms - from Web`)
                 } else {
