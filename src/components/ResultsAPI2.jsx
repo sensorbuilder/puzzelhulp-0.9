@@ -63,7 +63,7 @@ export default function Results(props) {
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
         searchword && console.time('API Timing') //skip first time
-        searchword && const a = performance.now() //.time('API Timing') //skip first time
+        const a = performance.now() //.time('API Timing') //skip first time
 
         //console.log(`Y`)
         setSolution([])
