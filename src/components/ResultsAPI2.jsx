@@ -87,18 +87,18 @@ export default function Results(props) {
                     //console.log(response.status)
                     setSolution(solutionArr)
                     console.timeEnd('API Timing')
-                    console.log(`${performance.now() - a}`)
+                    console.log(`${performance.now() - a}ms - from Web`)
                 } else {
                     console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
-                    console.timeEnd('API Timing')
+                    console.log(`${performance.now() - a}ms - From Cache`)
                     //b = performance.now()
                 }
 
             } catch (error) {
                 console.log({error})
                 //b = performance.now()
-                console.timeEnd('API Timing')
+                console.log(`${performance.now() - a}ms - Error`)
             }
             
         }
