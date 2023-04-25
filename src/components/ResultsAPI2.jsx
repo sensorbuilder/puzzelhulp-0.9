@@ -71,7 +71,7 @@ export default function Results(props) {
         async function makeApiCalls() {
             try {
                 console.log(`Get solution from cache or web`)
-                let response = await Axios.get(`${kvURL}set?searchword=${searchword}`)
+                let response = await Axios.get(`${kvURL}set?searchword=${searchword.toUpperCase()}`)
                 //console.log(response.data)
                 if (!response.data.found) {
                     //update = true
@@ -81,7 +81,7 @@ export default function Results(props) {
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
                     //console.log(solutionArr)
-                    response = await Axios.post(kvURL,{"searchword":searchword, "solution":JSON.stringify(solutionArr)})
+                    response = await Axios.post(kvURL,{"searchword":searchword.toUpperCase(), "solution":JSON.stringify(solutionArr)})
                     //console.log(response.status)
                     setSolution(solutionArr)
                     console.timeEnd('API Timing')
