@@ -62,7 +62,7 @@ export default function Results(props) {
 
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
-        searchword && console.time('API Timing') //skip first time
+        //searchword && console.time('API Timing') //skip first time
         const a = performance.now() //.time('API Timing') //skip first time
 
         //console.log(`Y`)
@@ -77,27 +77,22 @@ export default function Results(props) {
                 //console.log(response.data)
                 if (!response.data.found) {
                     //update = true
-                    console.log('From Web')
+                    //console.log('From Web')
                     response = await Axios.get(`${baseURL}${searchword}\/1\/1`)
                     const $ = load(response.data)
                     //$(selector2).toArray().map((item) => appendOrUpdateWoord($(item).text()))
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
                     //console.log(solutionArr)
                     response = await Axios.post(kvURL,{"searchword":searchword.toUpperCase(), "solution":JSON.stringify(solutionArr)})
-                    //console.log(response.status)
                     setSolution(solutionArr)
-                    console.timeEnd('API Timing')
                     console.log(`${performance.now() - a}ms - from Web`)
                 } else {
-                    console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
                     console.log(`${performance.now() - a}ms - From Cache`)
-                    //b = performance.now()
                 }
 
             } catch (error) {
                 console.log({error})
-                //b = performance.now()
                 console.log(`${performance.now() - a}ms - Error`)
             }
             
