@@ -72,7 +72,7 @@ export default function Results(props) {
         /*issue the API call skip when searchword is not set (1st run)*/
         async function makeApiCalls() {
             try {
-                console.log(`Get solution from cache or web`)
+                //console.log(`Get solution from cache or web`)
                 let response = await Axios.get(`${kvURL}set?searchword=${searchword.toUpperCase()}`)
                 //console.log(response.data)
                 if (!response.data.found) {
@@ -84,15 +84,15 @@ export default function Results(props) {
                     $(selector2).toArray().forEach( item => appOrUpd($(item).text()))
                     solutionArr.length && (response = await Axios.post(kvURL,{"searchword":searchword.toUpperCase(), "solution":JSON.stringify(solutionArr)}))
                     setSolution(solutionArr)
-                    console.log(`${performance.now() - a}ms - from Web`)
+                    console.log(`${performance.now() - a}ms - web`)
                 } else {
                     setSolution(JSON.parse(response.data.solution))
-                    console.log(`${performance.now() - a}ms - From Cache`)
+                    console.log(`${performance.now() - a}ms - cache`)
                 }
 
             } catch (error) {
                 console.log({error})
-                console.log(`${performance.now() - a}ms - Error`)
+                console.log(`${performance.now() - a}ms - error`)
             }
             
         }
