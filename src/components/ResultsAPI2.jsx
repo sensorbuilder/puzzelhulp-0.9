@@ -63,6 +63,8 @@ export default function Results(props) {
     React.useEffect(() => {
         /*reset solution result after searchword has been updated*/
         searchword && console.time('API Timing') //skip first time
+        searchword && const a = performance.now() //.time('API Timing') //skip first time
+
         //console.log(`Y`)
         setSolution([])
         solutionArr = []
@@ -85,6 +87,7 @@ export default function Results(props) {
                     //console.log(response.status)
                     setSolution(solutionArr)
                     console.timeEnd('API Timing')
+                    console.log({performance.now() - a})
                 } else {
                     console.log('From Cache')
                     setSolution(JSON.parse(response.data.solution))
