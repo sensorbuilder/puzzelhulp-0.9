@@ -13,9 +13,9 @@ export default function Main() {
         //console.log(`Click! : ${searchWord}`)
     }
     
-    function handleChange(event) {
-        setPost(oldPost => event.target.value)
-    }
+function handleChange(event) {
+    setPost(oldPost => event.target.value)
+}
 
     function handleFocus(event) {
         event.target.select()
