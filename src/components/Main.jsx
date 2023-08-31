@@ -6,8 +6,7 @@ export default function Main() {
     const [post, setPost] = React.useState("");
     const [searchWord, setSearchWord] = React.useState("")
     const [searchSolution, setSearchSolution] = React.useState([{ letters: 8, woorden: ['No Result']}])
-    //const [result, setResult] = React.useState(data.data);
-   
+
     function handleClick(event) {
         event.preventDefault()
         setSearchWord(prev => post)
