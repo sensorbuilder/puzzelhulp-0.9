@@ -1,4 +1,5 @@
 import React from "react"
+import versionInfo from '../version.json'
 
 export default function Footer(props) {
     //console.log('Rendered - Footer')
@@ -10,6 +11,7 @@ export default function Footer(props) {
     return (
         <div className="footer--text">
             <p>{`${wordSum} woorden gevonden - powered by mijnwoordenboek.nl`}</p>
+            <p>{`v${versionInfo.commit} (${versionInfo.date})`}</p>
         </div>
         
     )
